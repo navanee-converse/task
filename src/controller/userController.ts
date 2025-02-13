@@ -18,6 +18,12 @@ export async function signUpUser(req:Request,res:Response,next:NextFunction)
     {
         let name:string = req.body.userName
         let password:string = req.body.password
+        if(password.length<6)
+        {
+            err.name = "Validation error"
+            err.message = "Password should contain minimum length of 6 digits"
+            throw err
+        }
        
         password = await hashPassword(password)
 

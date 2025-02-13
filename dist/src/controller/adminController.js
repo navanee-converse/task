@@ -43,6 +43,11 @@ function signup(req, res, next) {
         try {
             let name = req.body.adminName;
             let password = req.body.password;
+            if (password.length < 6) {
+                err.name = "ValidationError";
+                err.message = "password should contain minimum 6 character";
+                throw err;
+            }
             let adminId = (0, adminIdGenerate_1.generateId)(name);
             password = yield (0, passwordhash_1.hashPassword)(password);
             let token = { id: adminId, name: name };

@@ -30,6 +30,11 @@ function signUpUser(req, res, next) {
         try {
             let name = req.body.userName;
             let password = req.body.password;
+            if (password.length < 6) {
+                err.name = "Validation error";
+                err.message = "Password should contain minimum length of 6 digits";
+                throw err;
+            }
             password = yield (0, passwordhash_1.hashPassword)(password);
             let mail = req.body.mail;
             let fileName = req.file.originalname;
@@ -118,6 +123,7 @@ function updateUser(req, res, next) {
             if (mail !== undefined) {
                 data.mail = mail;
             }
+            console.log(password + "" + id);
             let [count] = yield user.update(data, { where: { userId: id } });
             if (count > 0) {
                 response_1.response.message = "User details updated for below id";

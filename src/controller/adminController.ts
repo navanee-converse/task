@@ -26,6 +26,12 @@ export async function signup(req:Request,res:Response,next:NextFunction)
     {                               
         let name:string = req.body.adminName
         let password:string = req.body.password
+        if(password.length<6)
+        {
+            err.name = "ValidationError"
+            err.message = "password should contain minimum 6 character"
+            throw err
+        }
         
         let adminId:string = generateId(name)
         password = await hashPassword(password)
