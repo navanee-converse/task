@@ -1,9 +1,8 @@
-import { Sequelize } from "sequelize-typescript";
-import dotenv from "dotenv";
-import { Admin } from "../models/admin";
-import { User } from "../models/userDetails";
-import { UserFile } from "../models/userFiles";
-import { Status } from "../models/status";
+import { Sequelize } from 'sequelize-typescript';
+import dotenv from 'dotenv';
+import { Admin } from '../models/admin';
+import { User } from '../models/user';
+import { UserFile } from '../models/userfile';
 dotenv.config();
 
 const host = process.env.HOST;
@@ -16,7 +15,7 @@ export const sequelize = new Sequelize({
   username: user,
   password: password,
   database: db,
-  dialect: "mysql",
+  dialect: 'mysql',
   logging: false,
-  models:[Admin,User,UserFile,Status]
+  models: [Admin, User, UserFile],
 });

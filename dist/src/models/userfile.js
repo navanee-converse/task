@@ -9,33 +9,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Status = void 0;
+exports.UserFile = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-const dataTypeStructure_1 = require("../interface/dataTypeStructure");
 const user_1 = require("./user");
-let Status = class Status extends sequelize_typescript_1.Model {
+let UserFile = class UserFile extends sequelize_typescript_1.Model {
 };
-exports.Status = Status;
+exports.UserFile = UserFile;
 __decorate([
     sequelize_typescript_1.PrimaryKey,
     sequelize_typescript_1.AutoIncrement,
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
-], Status.prototype, "statusId", void 0);
+], UserFile.prototype, "fileId", void 0);
 __decorate([
-    (0, sequelize_typescript_1.Default)(dataTypeStructure_1.UserStatus.notViewed),
-    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.ENUM(...Object.values(dataTypeStructure_1.UserStatus))),
+    (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.STRING),
     __metadata("design:type", String)
-], Status.prototype, "status", void 0);
+], UserFile.prototype, "fileName", void 0);
+__decorate([
+    (0, sequelize_typescript_1.Column)({
+        type: sequelize_typescript_1.DataType.BLOB('medium'),
+    }),
+    __metadata("design:type", Buffer)
+], UserFile.prototype, "resume", void 0);
 __decorate([
     (0, sequelize_typescript_1.ForeignKey)(() => user_1.User),
     (0, sequelize_typescript_1.Column)(sequelize_typescript_1.DataType.INTEGER),
     __metadata("design:type", Number)
-], Status.prototype, "user_id", void 0);
-exports.Status = Status = __decorate([
+], UserFile.prototype, "user_id", void 0);
+__decorate([
+    (0, sequelize_typescript_1.BelongsTo)(() => user_1.User),
+    __metadata("design:type", user_1.User)
+], UserFile.prototype, "user_details", void 0);
+exports.UserFile = UserFile = __decorate([
     (0, sequelize_typescript_1.Table)({
         freezeTableName: true,
         paranoid: true,
         timestamps: false,
     })
-], Status);
+], UserFile);

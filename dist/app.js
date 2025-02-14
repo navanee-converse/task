@@ -15,18 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const dbconfig_1 = require("./src/config/dbconfig");
-const adminRoute_1 = require("./src/routes/adminRoute");
-const userRoutes_1 = require("./src/routes/userRoutes");
-const errorHandler_1 = require("./src/middleware/errorHandler");
+const adminroutes_1 = require("./src/routes/adminroutes");
+const userroutes_1 = require("./src/routes/userroutes");
+const errorHandler_1 = require("./src/middlewares/errorHandler");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_out_json_1 = __importDefault(require("./swagger-out.json"));
 dotenv_1.default.config();
 const port = process.env.PORT || 8080;
 const app = (0, express_1.default)();
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_out_json_1.default));
-app.use('/admin', adminRoute_1.adminroute);
-app.use('/user', userRoutes_1.userroute);
-app.use(errorHandler_1.errorHandler);
+app.use('/admin', adminroutes_1.adminroute);
+app.use('/user', userroutes_1.userroute);
 dbconfig_1.sequelize
     .sync()
     .then(() => __awaiter(void 0, void 0, void 0, function* () {

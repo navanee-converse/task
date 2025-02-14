@@ -1,6 +1,5 @@
-export let response = {
-    isSuccess:true,
-    timestamp:new Date().toISOString(),
-    message:"",
-    data:{}
-}
+export type resp = {
+  success: boolean;
+  message: string;
+  data: object;
+};

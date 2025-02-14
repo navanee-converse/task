@@ -6,13 +6,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userroute = void 0;
 const express_1 = require("express");
 const multerconfig_1 = require("../config/multerconfig");
-const userController_1 = require("../controller/userController");
+const usercontroller_1 = require("../controller/usercontroller");
 const body_parser_1 = __importDefault(require("body-parser"));
-const validateToken_1 = require("../middleware/validateToken");
+const validateToken_1 = require("../middlewares/validateToken");
 exports.userroute = (0, express_1.Router)();
 exports.userroute.use(body_parser_1.default.json());
-exports.userroute.post('/signup', multerconfig_1.upload.single('resume'), userController_1.signUpUser);
-exports.userroute.post('/signin', userController_1.signInUser);
+exports.userroute.post('/create', multerconfig_1.upload.single('resume'), usercontroller_1.signUpUser);
+exports.userroute.post('/sign-in', usercontroller_1.signInUser);
 exports.userroute.use(validateToken_1.verifyToken);
-exports.userroute.get('/viewstatus', userController_1.viewstatus);
-exports.userroute.put('/updateuser', userController_1.updateUser);
+/**
+ * @swagger
+ * /user:
+ *   get:
+ *     tags:
+ *       - User
+ *     description: Get user data
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+exports.userroute.get('/view', usercontroller_1.viewstatus);
+exports.userroute.put('/update', usercontroller_1.updateUser);

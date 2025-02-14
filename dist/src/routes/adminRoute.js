@@ -1,12 +1,15 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminroute = void 0;
 const express_1 = require("express");
 const adminController_1 = require("../controller/adminController");
-const bodyParser = require("body-parser");
+const body_parser_1 = __importDefault(require("body-parser"));
 const validateToken_1 = require("../middleware/validateToken");
 exports.adminroute = (0, express_1.Router)();
-exports.adminroute.use(bodyParser.json());
+exports.adminroute.use(body_parser_1.default.json());
 exports.adminroute.post('/signup', adminController_1.signup);
 exports.adminroute.post('/signin', adminController_1.signInAdmin);
 exports.adminroute.use(validateToken_1.verifyToken);

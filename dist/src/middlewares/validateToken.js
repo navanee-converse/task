@@ -12,15 +12,15 @@ const err = new Error();
 function verifyToken(req, res, next) {
     try {
         const header = req.headers;
-        if ((secretekey !== undefined) && (header.authorization !== undefined)) {
+        if (secretekey !== undefined && header.authorization !== undefined) {
             const token = header.authorization.split(' ')[1];
             const user = jsonwebtoken_1.default.verify(token, secretekey); //it verify token
             req.user = user;
             next();
         }
         else {
-            err.name = "TokenError";
-            err.message = "No token or secrete key";
+            err.name = 'TokenError';
+            err.message = 'No token or secrete key';
             next(err);
         }
     }

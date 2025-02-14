@@ -18,82 +18,28 @@
         }
     },
     "paths": {
-        "/signup": {
+        "/admin/create": {
             "post": {
                 "description": "",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "adminName": {
-                                    "example": "any"
-                                },
-                                "password": {
-                                    "example": "any"
-                                }
-                            }
-                        }
-                    }
-                ],
                 "responses": {
-                    "201": {
-                        "description": "Created"
-                    },
-                    "202": {
-                        "description": "Accepted"
+                    "default": {
+                        "description": ""
                     }
                 }
             }
         },
-        "/signin": {
+        "/admin/sign-in": {
             "post": {
                 "description": "",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "adminId": {
-                                    "example": "any"
-                                },
-                                "password": {
-                                    "example": "any"
-                                }
-                            }
-                        }
-                    }
-                ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "default": {
+                        "description": ""
                     }
                 }
             }
         },
-        "/viewstatus": {
+        "/admin/view": {
             "get": {
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/updateuser": {
-            "put": {
                 "description": "",
                 "parameters": [
                     {
@@ -109,29 +55,9 @@
                 }
             }
         },
-        "/viewall": {
+        "/admin/view-resume/{id}": {
             "get": {
                 "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    }
-                }
-            }
-        },
-        "/downloadresume/{id}": {
-            "get": {
-                "description": "",
-                "produces": [
-                    "application/pdf"
-                ],
                 "parameters": [
                     {
                         "name": "id",
@@ -146,13 +72,13 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "default": {
+                        "description": ""
                     }
                 }
             }
         },
-        "/changestatus": {
+        "/admin/change-status": {
             "put": {
                 "description": "",
                 "parameters": [
@@ -169,7 +95,7 @@
                 }
             }
         },
-        "/filter": {
+        "/admin/filter": {
             "get": {
                 "description": "",
                 "parameters": [
@@ -186,7 +112,7 @@
                 }
             }
         },
-        "/changepassword": {
+        "/admin/update": {
             "put": {
                 "description": "",
                 "parameters": [
@@ -194,23 +120,65 @@
                         "name": "authorization",
                         "in": "header",
                         "type": "string"
-                    },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "schema": {
-                            "type": "object",
-                            "properties": {
-                                "password": {
-                                    "example": "any"
-                                }
-                            }
-                        }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK"
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/create": {
+            "post": {
+                "description": "",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/sign-in": {
+            "post": {
+                "description": "",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/view": {
+            "get": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/user/update": {
+            "put": {
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
                     }
                 }
             }

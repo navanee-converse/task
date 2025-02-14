@@ -21,23 +21,23 @@ __decorate([
 ], Admin.prototype, "adminId", void 0);
 __decorate([
     sequelize_typescript_1.NotNull,
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
-    }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, allowNull: false }),
     __metadata("design:type", String)
 ], Admin.prototype, "password", void 0);
 __decorate([
     sequelize_typescript_1.NotNull,
-    (0, sequelize_typescript_1.Length)({ msg: "Name Length should be in the length between 3 to 20", min: 3, max: 20 }),
-    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING,
-        allowNull: false
+    (0, sequelize_typescript_1.Length)({
+        msg: 'Name Length should be in the length between 3 to 20',
+        min: 3,
+        max: 20,
     }),
+    (0, sequelize_typescript_1.Column)({ type: sequelize_typescript_1.DataType.STRING, allowNull: false }),
     __metadata("design:type", String)
 ], Admin.prototype, "adminName", void 0);
 exports.Admin = Admin = __decorate([
     (0, sequelize_typescript_1.Table)({
         freezeTableName: true,
         paranoid: true,
-        timestamps: false
+        timestamps: false,
     })
 ], Admin);

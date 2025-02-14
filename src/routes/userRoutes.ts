@@ -1,18 +1,23 @@
-import { Router } from "express";
-import { upload } from "../config/multerconfig";
-import { signInUser, signUpUser, updateUser, viewstatus } from "../controller/userController";
-import bodyParser from "body-parser";
-import { verifyToken } from "../middleware/validateToken";
+import { Router } from 'express';
+import { upload } from '../config/multerconfig';
+import {
+  signInUser,
+  signUpUser,
+  updateUser,
+  viewstatus,
+} from '../controller/usercontroller';
+import bodyParser from 'body-parser';
+import { verifyToken } from '../middlewares/validateToken';
 
-export const userroute  = Router()
-userroute.use(bodyParser.json())
+export const userroute = Router();
+userroute.use(bodyParser.json());
 
-userroute.post('/signup',upload.single('resume'),signUpUser)
+userroute.post('/create', upload.single('resume'), signUpUser);
 
-userroute.post('/signin',signInUser)
+userroute.post('/sign-in', signInUser);
 
-userroute.use(verifyToken)
+userroute.use(verifyToken);
 
-userroute.get('/viewstatus',viewstatus)
+userroute.get('/view', viewstatus);
 
-userroute.put('/updateuser',updateUser)
+userroute.put('/update', updateUser);

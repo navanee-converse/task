@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.adminroute = void 0;
+const express_1 = require("express");
+const admincontroller_1 = require("../controller/admincontroller");
+const body_parser_1 = __importDefault(require("body-parser"));
+const validateToken_1 = require("../middlewares/validateToken");
+exports.adminroute = (0, express_1.Router)();
+exports.adminroute.use(body_parser_1.default.json());
+exports.adminroute.post('/create', admincontroller_1.signup);
+exports.adminroute.post('/sign-in', admincontroller_1.signInAdmin);
+exports.adminroute.use(validateToken_1.verifyToken);
+exports.adminroute.get('/view', admincontroller_1.viewAllApplictions);
+exports.adminroute.get('/view-resume/:id', admincontroller_1.viewResume);
+exports.adminroute.put('/change-status', admincontroller_1.changeStatus);
+exports.adminroute.get('/filter', admincontroller_1.filterUser);
+exports.adminroute.put('/update', admincontroller_1.changePassword);

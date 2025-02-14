@@ -11,8 +11,8 @@ const secretekey = process.env.SECRETE_KEY;
 function generateToken(data) {
     let header;
     if (secretekey !== undefined) {
-        const token = jsonwebtoken_1.default.sign(data, secretekey, { expiresIn: "15h" });
-        header = { "Authorization": `Bearer ${token}` };
+        const token = jsonwebtoken_1.default.sign(data, secretekey, { expiresIn: '15h' });
+        header = { Authorization: `Bearer ${token}` };
         return header;
     }
     else {
