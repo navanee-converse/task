@@ -16,16 +16,36 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const dbconfig_1 = require("./src/config/dbconfig");
 const adminroutes_1 = require("./src/routes/adminroutes");
-const userroutes_1 = require("./src/routes/userroutes");
+const userRoutes_1 = require("./src/routes/userRoutes");
 const errorHandler_1 = require("./src/middlewares/errorHandler");
+const swagger_jsdoc_1 = __importDefault(require("swagger-jsdoc"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_out_json_1 = __importDefault(require("./swagger-out.json"));
 dotenv_1.default.config();
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'API Documentation',
+        version: '1.0.0',
+        description: 'API documentation for Admin and User operations',
+    },
+    servers: [
+        {
+            url: 'http://localhost:8000',
+        },
+    ],
+};
+const options = {
+    swaggerDefinition,
+    apis: ['./src/routes/*.ts'],
+};
+const swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 const port = process.env.PORT || 8080;
 const app = (0, express_1.default)();
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_out_json_1.default));
 app.use('/admin', adminroutes_1.adminroute);
-app.use('/user', userroutes_1.userroute);
+app.use('/user', userRoutes_1.userroute);
+app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swaggerSpec));
 dbconfig_1.sequelize
     .sync()
     .then(() => __awaiter(void 0, void 0, void 0, function* () {

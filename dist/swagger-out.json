@@ -1,192 +1,452 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Task",
-        "version": "1.0.0",
-        "description": "Documentation for APIs"
+        "title": "Admin & User API",
+        "description": "API documentation for Admin and User related operations",
+        "version": "1.0.0"
     },
-    "host": "localhost:8000",
-    "basePath": "/",
-    "schemes": [
-        "http"
-    ],
-    "securityDefinitions": {
-        "BearerAuth": {
-            "type": "apiKey",
-            "in": "header",
-            "name": "Authorization"
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local server"
         }
-    },
+    ],
+    "tags": [
+        {
+            "name": "Admin",
+            "description": "Admin related operations"
+        },
+        {
+            "name": "User",
+            "description": "User related operations"
+        }
+    ],
     "paths": {
         "/admin/create": {
             "post": {
-                "description": "",
+                "tags": ["Admin"],
+                "summary": "Create a new admin user",
+                "description": "This endpoint creates a new admin user.",
+                "operationId": "createAdmin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userName": {
+                                        "type": "string",
+                                        "description": "The admin's username",
+                                        "example": "adminUser"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The admin's password",
+                                        "example": "password123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "201": {
+                        "description": "Admin user created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request (e.g., validation errors)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/sign-in": {
             "post": {
-                "description": "",
+                "tags": ["Admin"],
+                "summary": "Sign in an admin user",
+                "description": "This endpoint signs in an admin user.",
+                "operationId": "signInAdmin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "userName": {
+                                        "type": "string",
+                                        "description": "The admin's username",
+                                        "example": "adminUser"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The admin's password",
+                                        "example": "password123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Successfully signed in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Authentication token for the admin"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (invalid credentials)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/view": {
             "get": {
-                "description": "",
-                "parameters": [
+                "tags": ["Admin"],
+                "summary": "View all applications",
+                "description": "This endpoint retrieves all applications submitted by users.",
+                "operationId": "viewAllApplications",
+                "security": [
                     {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
+                        "ApiKeyAuth": []
                     }
                 ],
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "List of applications",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (no valid token)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/view-resume/{id}": {
             "get": {
-                "description": "",
+                "tags": ["Admin"],
+                "summary": "View a resume by ID",
+                "description": "This endpoint retrieves a user's resume by their ID.",
+                "operationId": "viewResume",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
+                        "description": "The ID of the user whose resume to view",
+                        "schema": {
+                            "type": "integer"
+                        }
                     }
                 ],
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Resume retrieved successfully",
+                        "content": {
+                            "application/pdf": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "byte"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Resume not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/change-status": {
             "put": {
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
+                "tags": ["Admin"],
+                "summary": "Change the status of an application",
+                "description": "This endpoint allows an admin to change the status of a user's application.",
+                "operationId": "changeStatus",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "applicationId": {
+                                        "type": "integer",
+                                        "description": "The ID of the application",
+                                        "example": 123
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "description": "The new status for the application",
+                                        "example": "Approved"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Status changed successfully"
+                    },
+                    "400": {
+                        "description": "Bad request (e.g., missing applicationId or status)"
+                    },
+                    "404": {
+                        "description": "Application not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/filter": {
             "get": {
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
-                    }
-                ],
+                "tags": ["Admin"],
+                "summary": "Filter users based on query parameters",
+                "description": "This endpoint filters users based on the specified query parameters.",
+                "operationId": "filterUser",
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Filtered user data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/admin/update": {
             "put": {
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
+                "tags": ["Admin"],
+                "summary": "Change the admin's password",
+                "description": "This endpoint allows an admin to change their password.",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "oldPassword": {
+                                        "type": "string",
+                                        "description": "The admin's current password",
+                                        "example": "oldPassword123"
+                                    },
+                                    "newPassword": {
+                                        "type": "string",
+                                        "description": "The new password for the admin",
+                                        "example": "newPassword123"
+                                    }
+                                }
+                            }
+                        }
                     }
-                ],
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Password changed successfully"
+                    },
+                    "400": {
+                        "description": "Bad request (e.g., password mismatch)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/user/create": {
             "post": {
-                "description": "",
+                "tags": ["User"],
+                "summary": "Sign up a new user with resume",
+                "description": "This endpoint creates a new user with a file upload for resume.",
+                "operationId": "signUpUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string",
+                                        "description": "The user's username",
+                                        "example": "user1"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "description": "The user's email address",
+                                        "example": "user1@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The user's password",
+                                        "example": "password123"
+                                    },
+                                    "resume": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "description": "The user's resume file"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "201": {
+                        "description": "User created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request (validation error)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/user/sign-in": {
             "post": {
-                "description": "",
+                "tags": ["User"],
+                "summary": "Sign in a user",
+                "description": "This endpoint signs in a user.",
+                "operationId": "signInUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "description": "The user's email address",
+                                        "example": "user1@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "The user's password",
+                                        "example": "password123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "Successfully signed in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Authentication token for the user"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized (invalid credentials)"
+                    },
+                    "500": {
+                        "description": "Internal server error"
                     }
                 }
             }
         },
         "/user/view": {
             "get": {
-                "description": "",
-                "parameters": [
+                "tags": ["User"],
+                "summary": "View user status",
+                "description": "This endpoint retrieves the current status of the user.",
+                "operationId": "viewstatus",
+                "security": [
                     {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
+                        "ApiKeyAuth": []
                     }
                 ],
                 "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/user/update": {
-            "put": {
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "authorization",
-                        "in": "header",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
+                    "200": {
+                        "description": "User status retrieved successfully"
+                    },
+                    "401": {
+                        "description": "Local server"
                     }
                 }
             }
         }
-    },
-    "security": [
-        {
-            "BearerAuth": []
-        }
-    ]
+    }
 }
