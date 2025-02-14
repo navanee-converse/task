@@ -2,7 +2,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import { sequelize } from "./src/config/dbconfig";
 import { adminroute } from "./src/routes/adminroutes";
-import { userroute } from "./src/routes/userroutes";
+import { userroute } from "./src/routes/userRoutes";
 import { errorHandler } from "./src/middlewares/errorHandler";
 import swaggerUI from "swagger-ui-express"
 import spec from './swagger-out.json'

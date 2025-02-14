@@ -5,7 +5,7 @@ import {
   signUpUser,
   updateUser,
   viewstatus,
-} from '../controller/usercontroller';
+} from '../controller/userController';
 import bodyParser from 'body-parser';
 import { verifyToken } from '../middlewares/validateToken';
 

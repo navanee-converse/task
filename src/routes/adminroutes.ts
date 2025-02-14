@@ -7,7 +7,7 @@ import {
   signup,
   viewAllApplictions,
   viewResume,
-} from '../controller/admincontroller';
+} from '../controller/adminController';
 import bodyParser from 'body-parser';
 import { verifyToken } from '../middlewares/validateToken';
 
